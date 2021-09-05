@@ -1,0 +1,12 @@
+name = "H3Geometry"
+uuid = "8e5c4cf5-38ac-4d18-a7b2-92eb5d865453"
+authors = ["Ted Dunning <ted.dunning@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Debugger = "31a5f54b-26ea-5ae9-a837-f05ce5417438"
+GeoInterface = "cf35fbd7-0cd7-5166-be24-54bfbe79505f"
+Geodesy = "0ef565a4-170c-5f04-8de2-149903a85f3d"
+H3 = "f62fece2-b996-571a-b4c9-e662aba1c617"
+LibGEOS = "a90b1aa1-3769-5649-ba7e-abc5a9d163eb"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
