@@ -126,6 +126,9 @@ julia> plot!(difference(px,p))
 ```
 """
 function polyfill(poly::AbstractPolygon, resolution::Int; cover=1.2)::Vector{H3Index}
+    if !LibGEOS.isValid(poly)
+        throw(ArgumentError("Argument must not be self-intersecting polygon"))
+    end
     cover = max(0.0, cover)
     if cover > 0.0
         # we expand by an amount related to the size of a hex edge
@@ -139,10 +142,14 @@ function polyfill(poly::AbstractPolygon, resolution::Int; cover=1.2)::Vector{H3I
         # expand our polygon projected form. We also simplify to avoid large number of vertices
         projected = map(x->tx(LLA(x..., 0))[1:2], coordinates(boundary(poly)))
         expanded = simplify(buffer(LibGEOS.Polygon([projected]), fudge), fudge/5)
-        
-        # project back
-        coords = map(lla-> [lla.lat, lla.lon], map(x->inv(tx)(ENU(x..., 0)), coordinates(boundary(expanded))))
-        poly = LibGEOS.Polygon([coords])
+        # expanded can be a Polygon or a MultiPolygon
+        if expanded isa LibGEOS.MultiPolygon
+            throw(ArgumentError("Buffering polygon resulted in Multipolygon ... shouldn't happen"))
+        else
+            bounds = coordinates(boundary(expanded))
+            coords = map(lla -> [lla.lat, lla.lon], map(x->inv(tx)(ENU(x..., 0)), bounds))
+            poly = LibGEOS.Polygon([coords])
+        end
     end
     vertices = map(x->GeoCoord(map(deg2rad, x)...), coordinates(boundary(poly)))
     fence = Geofence(length(vertices), pointer(vertices))
