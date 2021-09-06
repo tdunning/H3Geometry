@@ -19,7 +19,7 @@ The `H3Geometry` package is not yet available in the Julia registry but you
 can install it directly from GitHub. Type `]` to enter the package manager and 
 then
 ```
-add https://github.dev/tdunning/H3Geometry
+add https://github.com/tdunning/H3Geometry
 ```
 
 # Examples
