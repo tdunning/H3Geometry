@@ -13,6 +13,15 @@ precisely control the tradeoff between over and under coverage.
 This package also can convert `H3indexes` into polygons that can be plotted
 or manipulated using [LibGEOS](https://github.com/JuliaGeo/LibGEOS.jl)
 
+# Installing
+
+The `H3Geometry` package is not yet available in the Julia registry but you 
+can install it directly from GitHub. Type `]` to enter the package manager and 
+then
+```
+add https://github.dev/tdunning/H3Geometry
+```
+
 # Examples
 
 You can use positions expressed as latitude and longitude in decimal degrees and use broadcast:
