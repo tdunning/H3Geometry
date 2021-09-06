@@ -52,6 +52,7 @@ julia> H3.API.geoToH3.(x, 5)
        end
 julia> gui()
 ```
+![Random points converted to hexagons](https://github.com/tdunning/H3Geometry/blob/main/images/h3ToPolygon.jpg?raw=true)
 
 The polyfill function is also easier to use and Julian now. It is extended to allow a variable amount of over-coverage to let you ensure complete coverage of the underlying shape. Note that you can't reasonably poly-fill self-intersecting polygons.
 
@@ -67,16 +68,12 @@ julia> push!(x, x[1])
 7-element Vector{Vector{Float64}}:
  [42.79713730410485, -109.37352389704235]
  ...
- 
+
+# The buffer function avoids self-intersection 
 julia> p = buffer(LibGEOS.Polygon([x]), 0)
 LibGEOS.Polygon(Ptr{Nothing} @0x00007faa211bf5b0)
 
 julia> plot()
-julia> for i in 4:8
-               plot!(H3Geometry.h3ToPolygon(H3Geometry.polyfill(p,i)))
-           end
-julia> gui()
-```
 
 julia> for i in 4:8
        plot!(H3Geometry.h3ToPolygon(H3Geometry.polyfill(p,i)))
@@ -84,4 +81,5 @@ julia> for i in 4:8
 
 julia> plot!(p)
 ```
-
+Here is the output showing the results of `polyfill` applied at different resolutions.
+![Example of polyfill at various resolutions](https://raw.githubusercontent.com/tdunning/H3Geometry/main/images/polyfill.jpg)
